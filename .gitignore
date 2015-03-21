@@ -188,3 +188,5 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 /ET_A3/.ntvs_analysis.dat
+/ET_A3/database/local.0
+/ET_A3/database/local.ns
