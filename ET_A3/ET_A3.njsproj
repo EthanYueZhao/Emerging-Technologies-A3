@@ -43,6 +43,7 @@
     <Content Include="views\error.ejs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="database\" />
     <Folder Include="public\" />
     <Folder Include="public\images\" />
     <Folder Include="public\javascripts\" />
