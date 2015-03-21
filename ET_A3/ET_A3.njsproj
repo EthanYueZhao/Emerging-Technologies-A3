@@ -31,13 +31,24 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.js" />
+    <Compile Include="public\javascripts\appConfig.js" />
     <Compile Include="public\javascripts\lib\angular-resource.js" />
     <Compile Include="public\javascripts\lib\angular-route.js" />
+    <None Include="public\javascripts\lib\angular.intellisense.js" />
     <Compile Include="public\javascripts\lib\angular.js" />
+    <Compile Include="public\javascripts\lib\bootstrap.min.js" />
+    <Compile Include="public\javascripts\controllers.js" />
+    <None Include="public\javascripts\lib\_references.js" />
+    <Compile Include="public\javascripts\lib\jquery.min.js" />
+    <Compile Include="public\javascripts\lib\ui-bootstrap-tpls-0.12.0.js" />
     <Compile Include="routes\index.js" />
     <Compile Include="routes\users.js" />
     <Content Include="package.json" />
     <Content Include="public\index.html" />
+    <Content Include="public\javascripts\lib\jquery.min.map" />
+    <Content Include="public\partials\listView.html" />
+    <Content Include="public\stylesheets\bootstrap.css" />
+    <Content Include="public\stylesheets\bootstrap.css.map" />
     <Content Include="public\stylesheets\style.styl" />
     <Content Include="README.md" />
     <Content Include="views\error.ejs" />
@@ -48,6 +59,7 @@
     <Folder Include="public\images\" />
     <Folder Include="public\javascripts\" />
     <Folder Include="public\javascripts\lib\" />
+    <Folder Include="public\partials\" />
     <Folder Include="public\stylesheets\" />
     <Folder Include="routes\" />
     <Folder Include="views\" />
