@@ -10,6 +10,11 @@ router.get('/', function (req, res) {
 
 // connect to local DB
 mongoose.connect('mongodb://127.0.0.1:27017/ETA3DB');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function (callback) {
+    console.log('db connected successfully!');
+});
 
 var PatientSchema = new Schema({
     _id: String,
@@ -28,17 +33,23 @@ var VisitSchema = new Schema({
     billing_amt: String
 });
 
-var Patient = mongoose.model('Patient', PatientSchema);
+var DoctorSchema = new Schema({
+    _id: String,
+    name:String
+});
+
+var patients = mongoose.model('patients', PatientSchema);
+var doctors = mongoose.model('doctors', DoctorSchema);
 
 // APIs++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-router.get('/d', function (req, res) {
-    Patient.findById("p001", function (err, docs) {
+router.get('/patients', function (req, res) {
+
+    patients.find(function (err, patients) {
         if (err)
             console.log("error");
-        
-        console.log("-------------------");
-        console.log(docs);
-        res.json(docs);
+              
+        console.log(patients);
+        res.json(patients);
     });
 });
 
