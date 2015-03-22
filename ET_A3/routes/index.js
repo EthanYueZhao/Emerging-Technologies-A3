@@ -35,20 +35,20 @@ var VisitSchema = new Schema({
 
 var DoctorSchema = new Schema({
     _id: String,
-    name:String
+    name: String
 });
 
 var patients = mongoose.model('patients', PatientSchema);
 var doctors = mongoose.model('doctors', DoctorSchema);
 
 // APIs++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-router.get('/patients', function (req, res) {
 
-    patients.find(function (err, patients) {
+router.get('/patients/:id', function (req, res) {
+    // find patients by last name from db
+    patients.find({ last_name: req.params.id }, function (err, patients) {
         if (err)
             console.log("error");
-              
-        console.log(patients);
+        
         res.json(patients);
     });
 });

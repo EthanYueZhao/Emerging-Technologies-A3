@@ -1,28 +1,19 @@
 ﻿'use strict';
 
-var patientListCtrl = a3App.controller('patientListCtrl', function ($scope, patientsDS, searchDS) {
-    //var list = searchDS.getList();
-    //console.log('list+++++' + list);
+var controllers = angular.module('controllers', []);
+
+var patientListCtrl = controllers.controller('patientListCtrl', function ($scope, patientsDS, searchDS) {
     
-    //if (list != null)
-    //{
-    //    $scope.patients = list;
-    //}
-    $scope.$watch(function () { return searchDS.getList(); });
-    console.log('listCtrl+++++' );
-    console.log(searchDS.getList());
-    $scope.patients = searchDS.getList();
-   // $scope.patients = patientsDS.query();
-        
+    $scope.$on('data', function (event, data) { $scope.patients = data; }); // when recieve broadcast, populate $scope.patients
+     
 });
 
-var navbarCtrl = a3App.controller('navbarCtrl', function ($scope, patientsDS, searchDS) {
+var navbarCtrl = controllers.controller('navbarCtrl', function ($scope, patientsDS, $routeParams, searchDS) {
     $scope.searchByLastName = function () {
-        //searchDS.searchPara.para = $scope.lastName;
-        //console.log(searchDS.searchPara.para); 
-        searchDS.setList(patientsDS.query());
-        console.log('navbarCtrl+++++' + searchDS.getList());
-        console.log(searchDS.getList());
+        
+        $scope.$root.$broadcast('data', patientsDS.query({id: $scope.lastName})); // get patients by last name and broadcast to other controllers
+        console.log($scope.lastName);
+      
     };
    
 });
