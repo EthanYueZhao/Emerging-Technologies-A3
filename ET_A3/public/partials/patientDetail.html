@@ -1,0 +1,36 @@
+﻿<form>
+    <div class="container-fluid">
+        <div class="modal-header">
+            <h3>{{tittle}}</h3>
+        </div>
+        <div class="row">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td>ID:</td>
+                        <td><input type="text" ng-model="patient._id" required /></td>
+                    </tr>
+                    <tr>
+                        <td>First Name:</td>
+                        <td><input type="text" ng-model="patient.first_name" required /></td>
+                    </tr>
+                    <tr>
+                        <td>Last Name:</td>
+                        <td><input type="text" ng-model="patient.last_name" required /></td>
+                    </tr>
+                    <tr>
+                        <td>Age:</td>
+                        <td><input type="text" ng-model="patient.age" required /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" ng-click="confirm()">{{confirmation}}</button>
+            <button class="btn btn-default" ng-click="cancel()">cancel</button>
+        </div>
+
+    </div>
+</form>

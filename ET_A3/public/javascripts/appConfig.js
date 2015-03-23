@@ -1,7 +1,7 @@
 ﻿'use strcit';
 
 // main app module
-var a3App = angular.module('a3App', ['ngRoute', 'ui.bootstrap', 'DataServices','controllers']);
+var a3App = angular.module('a3App', ['ngRoute', 'ui.bootstrap', 'DataServices', 'controllers']);
 
 a3App.config(['$routeProvider', function ($routeProvider) {
         
@@ -21,10 +21,7 @@ var DataServices = angular.module('DataServices', ['ngResource']);
 
 // in charge of patients data
 DataServices.factory('patientsDS', function ($resource) {
-    return $resource('patients/:id',null, {
-        'update': { method: 'PUT' },
-        'search': { method: 'GET',  isArray:true}
-    });
+    return $resource('patients/:id', null, { 'update': { method: 'PUT' } });
 });
 
 // in charge of doctors data

@@ -43,13 +43,41 @@ var doctors = mongoose.model('doctors', DoctorSchema);
 
 // APIs++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+// get patients by parameter
 router.get('/patients/:id', function (req, res) {
     // find patients by last name from db
     patients.find({ last_name: req.params.id }, function (err, patients) {
-        if (err)
-            console.log("error");
-        
+        if (err) console.log("error");
         res.json(patients);
+    });
+});
+
+// post new patient
+router.post('/patients', function (req, res) {
+    var patient = new patients(req.body);
+    
+    patient.save(function (err) {
+        if (err) console.log('err when save');
+        console.log('patient saved');
+    });
+});
+
+// delete a patient by _id
+router.delete('/patients/:id', function (req, res) {
+    patients.remove({
+        _id: req.params.id
+    }, function (err) {
+        if (err) console.log('err when remove');
+        console.log('Successfully deleted');
+    });
+});
+
+// update a patient by _id
+router.put('/patients/:id', function (req, res) {
+    var patient = new patients(req.body);
+    
+    patients.findOneAndUpdate({ _id: patient._id }, patient, function (err) {
+        if (err) console.log("err when update");
     });
 });
 

@@ -2,7 +2,7 @@
 
     <div class="row">
         <h2>Patient List</h2>
-        <p>Filter:<input ng-model="filter" /></p>
+        <p>Filter:<input ng-model="filter" />&nbsp&nbsp&nbsp&nbsp&nbsp <button type="button" class="btn btn-primary" ng-click="openAddView()" >Add new patient</button> </p>
     </div>
     <div class="row">
         <table class="table table-bordered">
@@ -18,6 +18,10 @@
                     <td>{{patient._id}}</td>
                     <td>{{patient.first_name}}</td>
                     <td>{{patient.last_name}}</td>
+                    <td>
+                        <button type="button" class="btn btn-danger" ng-click="deletePatient(patient)">Delete</button>
+                        <button type="button" class="btn btn-info" ng-click="updatePatient(patient)">Update</button>
+                    </td>
                 </tr>
             </tbody>
         </table>

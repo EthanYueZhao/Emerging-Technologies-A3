@@ -46,6 +46,7 @@
     <Content Include="package.json" />
     <Content Include="public\index.html" />
     <Content Include="public\javascripts\lib\jquery.min.map" />
+    <Content Include="public\partials\patientDetail.html" />
     <Content Include="public\partials\listView.html" />
     <Content Include="public\stylesheets\bootstrap.css" />
     <Content Include="public\stylesheets\bootstrap.css.map" />
