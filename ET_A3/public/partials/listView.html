@@ -2,7 +2,7 @@
 
     <div class="row">
         <h2>Patient List</h2>
-        <p>Filter:<input ng-model="filter" />&nbsp&nbsp&nbsp&nbsp&nbsp <button type="button" class="btn btn-primary" ng-click="openAddView()" >Add new patient</button> </p>
+        <p>Filter:<input ng-model="filter" />&nbsp&nbsp&nbsp&nbsp&nbsp <button type="button" class="btn btn-primary" ng-click="openAddView()">Add new patient</button> </p>
     </div>
     <div class="row">
         <table class="table table-bordered">
@@ -24,6 +24,11 @@
                     </td>
                 </tr>
             </tbody>
+            <tfoot>
+                <tr>
+                    <pagination total-items="totalItems" ng-model="currentPage" items-per-page="itemsPerPage" ng-change="pageChanged()"></pagination>
+                </tr>
+            </tfoot>
         </table>
     </div>
 

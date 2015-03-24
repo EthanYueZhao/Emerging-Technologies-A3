@@ -5,8 +5,12 @@ var controllers = angular.module('controllers', []);
 // patient list controller
 var patientListCtrl = controllers.controller('patientListCtrl', function ($scope, patientsDS, searchDS, $modal) {
     // get patient list by search
-    $scope.$on('data', function (event, data) { $scope.patients = data; }); // when recieve broadcast, populate $scope.patients
-    console.log(searchDS.getList());
+    $scope.patients = {};
+    $scope.$on('data', function (event, data) {
+        console.log(data);
+        $scope.patients = data;
+    }); // when recieve broadcast, populate $scope.patients
+    console.log($scope.patients);
     // delete patient button event
     $scope.deletePatient = function (patient) {
         patientsDS.remove({ id: patient._id });
@@ -60,12 +64,24 @@ var patientListCtrl = controllers.controller('patientListCtrl', function ($scope
                 console.log("cancel");
             });
     };
+
+    // pagination setup
+    $scope.totalItems = 53; // total items
+    $scope.itemsPerPage = 2;
+    $scope.currentPage = 1; // current page
+    // page changed function
+    $scope.pageChanged = function () {
+        console.log('Page changed to: ' + $scope.currentPage);
+    };
+
 });
 
 // addPatient controller
 var addPatientCtrl = controllers.controller('addPatientCtrl', function ($scope, $modalInstance) {
     // page tittle
     $scope.tittle = 'Add a new patient';
+    // enable id input
+    $scope.isDisabled = false;
     // confirm button text
     $scope.confirmation = 'Add';
     // add button function
@@ -89,6 +105,8 @@ var addPatientCtrl = controllers.controller('addPatientCtrl', function ($scope, 
 var updatePatientCtrl = controllers.controller('updatePatientCtrl', function ($scope, $modalInstance, patient) {
     // page tittle
     $scope.tittle = 'Update a patient';
+    // disable id input
+    $scope.isDisabled = true;
     // confirm button text
     $scope.confirmation = 'Update';
     // display patient information
