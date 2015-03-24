@@ -1,4 +1,4 @@
-﻿'use strcit';
+﻿'use strict';
 
 // main app module
 var a3App = angular.module('a3App', ['ngRoute', 'ui.bootstrap', 'DataServices', 'controllers']);
@@ -30,10 +30,12 @@ DataServices.factory('doctorsDS', function ($resource) {
 });
 
 // in charge of search parameters
-DataServices.factory('searchDS', function () {
-    var patients = {};
-    return {
-        getList: function () { return patients; },        
-        setList: function (list) { patients = list; }
-    };
+DataServices.service('searchDS', function () {
+    var patients = [];
+    //return {
+    //    getList: function () { return patients; },        
+    //    setList: function (list) { patients = list; }
+    //};
+    this.getList = function () { return patients; };
+    this.setList = function (list) { patients = list; };
 });

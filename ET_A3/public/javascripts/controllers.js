@@ -3,10 +3,10 @@
 var controllers = angular.module('controllers', []);
 
 // patient list controller
-var patientListCtrl = controllers.controller('patientListCtrl', function ($scope, patientsDS, $modal) {
+var patientListCtrl = controllers.controller('patientListCtrl', function ($scope, patientsDS, searchDS, $modal) {
     // get patient list by search
     $scope.$on('data', function (event, data) { $scope.patients = data; }); // when recieve broadcast, populate $scope.patients
-    
+    console.log(searchDS.getList());
     // delete patient button event
     $scope.deletePatient = function (patient) {
         patientsDS.remove({ id: patient._id });
@@ -111,10 +111,24 @@ var updatePatientCtrl = controllers.controller('updatePatientCtrl', function ($s
 });
 
 // navbar controller
-var navbarCtrl = controllers.controller('navbarCtrl', function ($scope, patientsDS) {
-    
+var navbarCtrl = controllers.controller('navbarCtrl', function ($scope, patientsDS, doctorsDS, searchDS) {
+    // search by last name button event
     $scope.searchByLastName = function () {
         $scope.$root.$broadcast('data', patientsDS.query({ id: $scope.lastName })); // get patients by last name and broadcast to other controllers
+        searchDS.setList(patientsDS.query({ id: $scope.lastName }));
+    };
+    
+    // show all paitents button event
+    $scope.showPatientList = function () {
+        $scope.$root.$broadcast('data', patientsDS.query()); // get all patients and broadcast to other controllers
+    };
+    
+    // get all doctors
+    $scope.doctors = doctorsDS.query();
+    
+    // search by doctor button event
+    $scope.searchByDoctor = function () {
+        $scope.$root.$broadcast('data', patientsDS.query({ id: $scope.doctorId })); // get patients by doctor name and broadcast to other controllers
     };
    
 });

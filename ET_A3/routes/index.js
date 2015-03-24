@@ -43,12 +43,36 @@ var doctors = mongoose.model('doctors', DoctorSchema);
 
 // APIs++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+// get all doctors
+router.get('/doctors', function (req, res) {
+    // find all patients from db
+    doctors.find(function (err, doctors) {
+        if (err) console.log("error");
+        res.json(doctors);
+    });
+});
+
+// get all patient list
+router.get('/patients', function (req, res) {
+    // find all patients from db
+    patients.find(function (err, patients) {
+        if (err) console.log("error");
+        res.json(patients);
+    });
+});
+
 // get patients by parameter
 router.get('/patients/:id', function (req, res) {
     // find patients by last name from db
     patients.find({ last_name: req.params.id }, function (err, patients) {
         if (err) console.log("error");
-        res.json(patients);
+        if (patients.length !== 0) res.json(patients);
+    });
+    
+    // find patients by doctor id from db
+    patients.find({ family_doctor_ID: req.params.id }, function (err, patients) {
+        if (err) console.log("error");
+        if (patients !== 0) res.json(patients);
     });
 });
 

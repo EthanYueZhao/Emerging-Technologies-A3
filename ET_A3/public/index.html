@@ -38,8 +38,15 @@
                         </li>
                         <li>
                             <form class="navbar-form">
-                                <input type="text" ng-model="doctorName" placeholder="Search by doctor name" required /> &nbsp;
+                                <select ng-model="doctorId">
+                                    <option ng-repeat="doctor in doctors" value="{{doctor._id}}">Dr. {{doctor.name}}</option>
+                                </select>
                                 <button type="submit" class="btn btn-primary" ng-click="searchByDoctor()">Search</button>
+                            </form>
+                        </li>
+                        <li>
+                            <form class="navbar-form">
+                                <button type="submit" class="btn btn-success" ng-click="showPatientList()">All Patients</button>
                             </form>
                         </li>
                     </ul>
