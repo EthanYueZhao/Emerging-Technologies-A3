@@ -72,7 +72,7 @@ router.get('/patients/:id', function (req, res) {
     // find patients by doctor id from db
     patients.find({ family_doctor_ID: req.params.id }, function (err, patients) {
         if (err) console.log("error");
-        if (patients !== 0) res.json(patients);
+        if (patients.length !== 0) res.json(patients);
     });
 });
 

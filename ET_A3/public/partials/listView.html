@@ -11,10 +11,11 @@
                     <th>#</th>
                     <th>First Name</th>
                     <th>Last Name</th>
+                    <th>Operations</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="patient in patients | filter:filter">
+                <tr ng-repeat="patient in patients | filter:filter  ">
                     <td>{{patient._id}}</td>
                     <td>{{patient.first_name}}</td>
                     <td>{{patient.last_name}}</td>
@@ -24,12 +25,9 @@
                     </td>
                 </tr>
             </tbody>
-            <tfoot>
-                <tr>
-                    <pagination total-items="totalItems" ng-model="currentPage" items-per-page="itemsPerPage" ng-change="pageChanged()"></pagination>
-                </tr>
-            </tfoot>
+
         </table>
+        <pagination total-items="totalItems" ng-model="currentPage" items-per-page="itemsPerPage" ng-change="pageChanged()"></pagination>
     </div>
 
 </div>

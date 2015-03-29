@@ -3,14 +3,27 @@
 var controllers = angular.module('controllers', []);
 
 // patient list controller
-var patientListCtrl = controllers.controller('patientListCtrl', function ($scope, patientsDS, searchDS, $modal) {
-    // get patient list by search
-    $scope.patients = {};
+var patientListCtrl = controllers.controller('patientListCtrl', function ($scope, patientsDS, searchDS, $modal, $q) {
+    // get all patients by search
+    $scope.list = [];
+    // if value of list changes, list will get new value
+    $scope.$watch('list', function (newV, oldV) {
+        $scope.list = newV;
+        $scope.totalItems = $scope.list.length;
+        
+        var start = (($scope.currentPage - 1) * $scope.itemsPerPage);
+        var end = start + $scope.itemsPerPage;
+        
+        $scope.patients = $scope.list.slice(start, end);// populate patient list
+    });
+    
     $scope.$on('data', function (event, data) {
-        console.log(data);
-        $scope.patients = data;
-    }); // when recieve broadcast, populate $scope.patients
-    console.log($scope.patients);
+        
+        data.$promise.then(function (v) {
+            $scope.list = v;// when recieve broadcast, populate $scope.list
+        });
+    });
+    
     // delete patient button event
     $scope.deletePatient = function (patient) {
         patientsDS.remove({ id: patient._id });
@@ -64,26 +77,37 @@ var patientListCtrl = controllers.controller('patientListCtrl', function ($scope
                 console.log("cancel");
             });
     };
-
-    // pagination setup
-    $scope.totalItems = 53; // total items
-    $scope.itemsPerPage = 2;
+    
+    // pagination setup    
+    $scope.itemsPerPage = 10;
     $scope.currentPage = 1; // current page
+    
     // page changed function
-    $scope.pageChanged = function () {
-        console.log('Page changed to: ' + $scope.currentPage);
-    };
+    $scope.$watch('currentPage + itemsPerPage', function () {
+        var start = (($scope.currentPage - 1) * $scope.itemsPerPage);
+        var end = start + $scope.itemsPerPage;
+        
+        // display current list
+        $scope.patients = $scope.list.slice(start, end);        
+    });
+
 
 });
 
 // addPatient controller
-var addPatientCtrl = controllers.controller('addPatientCtrl', function ($scope, $modalInstance) {
+var addPatientCtrl = controllers.controller('addPatientCtrl', function ($scope, $modalInstance, doctorsDS) {
     // page tittle
     $scope.tittle = 'Add a new patient';
+    
     // enable id input
     $scope.isDisabled = false;
+    
+    // get all doctors
+    $scope.doctors = doctorsDS.query();
+    
     // confirm button text
     $scope.confirmation = 'Add';
+    
     // add button function
     $scope.confirm = function () {
         var patient = {
@@ -91,10 +115,12 @@ var addPatientCtrl = controllers.controller('addPatientCtrl', function ($scope, 
             first_name: $scope.patient.first_name,
             last_name: $scope.patient.last_name,
             age: $scope.patient.age,
+            family_doctor_ID: $scope.doctorId,
             created_at: new Date().toJSON()
         };
         $modalInstance.close(patient);
     };
+    
     // cancel button function
     $scope.cancel = function () {
         $modalInstance.dismiss();
@@ -102,15 +128,25 @@ var addPatientCtrl = controllers.controller('addPatientCtrl', function ($scope, 
 });
 
 // updatePatient controller
-var updatePatientCtrl = controllers.controller('updatePatientCtrl', function ($scope, $modalInstance, patient) {
+var updatePatientCtrl = controllers.controller('updatePatientCtrl', function ($scope, $modalInstance, patient, doctorsDS) {
     // page tittle
     $scope.tittle = 'Update a patient';
+    
+    // get all doctors
+    $scope.doctors = doctorsDS.query();
+    
     // disable id input
     $scope.isDisabled = true;
+    
     // confirm button text
     $scope.confirmation = 'Update';
+    
     // display patient information
     $scope.patient = patient;
+    
+    // display default family doctor
+    $scope.doctorId = patient.family_doctor_ID;
+    
     // update button function
     $scope.confirm = function () {
         var patient = {
@@ -118,10 +154,12 @@ var updatePatientCtrl = controllers.controller('updatePatientCtrl', function ($s
             first_name: $scope.patient.first_name,
             last_name: $scope.patient.last_name,
             age: $scope.patient.age,
-            created_at: new Date().toJSON()
+            family_doctor_ID: $scope.doctorId,
+            last_modified: new Date().toJSON()
         };
         $modalInstance.close(patient);
     };
+    
     // cancel button function
     $scope.cancel = function () {
         $modalInstance.dismiss();

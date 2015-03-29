@@ -22,6 +22,22 @@
                         <td>Age:</td>
                         <td><input type="text" ng-model="patient.age" required /></td>
                     </tr>
+                    <tr>
+                        <td>
+                            Family Doctor:
+                        </td>
+                        <td>
+                            <select ng-model="doctorId" ng-options="doctor._id as doctor.name for doctor in doctors" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Created at:</td>
+                        <td><input type="text" ng-model="patient.created_at" ng-disabled="true"></td>
+                    </tr>
+                    <tr>
+                        <td>Last modified at:</td>
+                        <td><input type="text" ng-model="patient.last_modified" ng-disabled="true"></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
