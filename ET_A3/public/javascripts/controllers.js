@@ -27,6 +27,8 @@ var patientListCtrl = controllers.controller('patientListCtrl', function ($scope
     // delete patient button event
     $scope.deletePatient = function (patient) {
         patientsDS.remove({ id: patient._id });
+       // $scope.list.pop(patient);
+       
     };
     
     // update patient button event

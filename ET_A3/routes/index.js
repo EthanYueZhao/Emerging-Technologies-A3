@@ -9,7 +9,7 @@ router.get('/', function (req, res) {
 });
 
 // connect to local DB
-mongoose.connect('mongodb://127.0.0.1:27017/ETA3DB');
+mongoose.connect('mongodb://eta3:eta3@ds041167.mongolab.com:41167/eta3db');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
