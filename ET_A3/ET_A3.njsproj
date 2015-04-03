@@ -5,6 +5,7 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Name>ET_A3</Name>
     <RootNamespace>ET_A3</RootNamespace>
+    <NameOfLastUsedPublishProfile>ETA4</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -34,7 +35,6 @@
     <Compile Include="public\javascripts\appConfig.js" />
     <Compile Include="public\javascripts\lib\angular-resource.js" />
     <Compile Include="public\javascripts\lib\angular-route.js" />
-    <Content Include="web.config" />
     <None Include="public\javascripts\lib\angular.intellisense.js" />
     <Compile Include="public\javascripts\lib\angular.js" />
     <Compile Include="public\javascripts\lib\bootstrap.min.js" />
