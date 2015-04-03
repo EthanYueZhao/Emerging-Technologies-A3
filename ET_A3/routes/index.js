@@ -9,7 +9,8 @@ router.get('/', function (req, res) {
 });
 
 // connect to local DB
-mongoose.connect('mongodb://eta3:eta3@ds041167.mongolab.com:41167/eta3db');
+mongoose.connect('mongodb://eta3:eta3@ds041167.mongolab.com:41167/eta3db'); // mongoLab connection
+//mongoose.connect('mongodb://MongoLab-et:LHbImFE5KZmkG9q0GAHOmcY1URW9vR5g_wW.SPH99yo-@ds045097.mongolab.com:45097/MongoLab-et'); // Azure connection
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
