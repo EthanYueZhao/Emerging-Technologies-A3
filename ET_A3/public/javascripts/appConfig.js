@@ -6,12 +6,16 @@ var a3App = angular.module('a3App', ['ngRoute', 'ui.bootstrap', 'DataServices', 
 a3App.config(['$routeProvider', function ($routeProvider) {
         
         $routeProvider.
-        when('/', {
+        when('/patientList', {
             templateUrl: 'partials/listView.html',
             controller: 'patientListCtrl'
         }).
+        when('/login', {
+            templateUrl: 'partials/login.html',
+            controller: 'loginCtrl'
+        }).
         otherwise({
-            redirectTo: '/'
+            redirectTo: '/login'
         });
     }
 ]);

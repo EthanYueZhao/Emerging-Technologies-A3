@@ -2,6 +2,10 @@
 var router = express.Router();
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var app = express();
+
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
 /* GET home page. */
 router.get('/', function (req, res) {
@@ -36,7 +40,9 @@ var VisitSchema = new Schema({
 
 var DoctorSchema = new Schema({
     _id: String,
-    name: String
+    name: String,
+    username: String,
+    password: String
 });
 
 var patients = mongoose.model('patients', PatientSchema);
@@ -107,5 +113,37 @@ router.put('/patients/:id', function (req, res) {
 });
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+app.use(passport.initialize());
+passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'passwd'
+},
+    function (username, password, done) {
+        doctors.findOne({ username: username }, function (err, user) {
+            if (err)
+            { return done(err); }
+            if (!user)
+            {
+                return done(null, false, { message: 'Incorrect username.' });
+            }
+            if (!user.validPassword(password))
+            {
+                return done(null, false, { message: 'Incorrect password.' });
+            }
+            return done(null, user);
+        });
+    }
+));
+
+router.post('/login',
+  passport.authenticate('local', {
+    successRedirect: '/patientList',
+    failureRedirect: '/login',
+    failureFlash: true
+})
+);
 
 module.exports = router;

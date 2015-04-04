@@ -23,6 +23,9 @@
         "bootstrap": "*",
         "angular-bootstrap": "*",
         "mongodb": "*",
-        "mongoose": "*"
+        "mongoose": "*",
+        "passport": "*",
+        "passport-local": "*",
+        "passport-local-mongoose": "*"
     }
 }

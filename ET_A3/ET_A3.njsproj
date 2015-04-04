@@ -36,6 +36,7 @@
     <Compile Include="public\javascripts\lib\angular-resource.js" />
     <Compile Include="public\javascripts\lib\angular-route.js" />
     <None Include="eta4.pubxml" />
+    <Content Include="public\partials\login.html" />
     <Content Include="web.config" />
     <None Include="public\javascripts\lib\angular.intellisense.js" />
     <Compile Include="public\javascripts\lib\angular.js" />
