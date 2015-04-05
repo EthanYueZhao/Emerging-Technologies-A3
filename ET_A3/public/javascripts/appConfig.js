@@ -14,6 +14,10 @@ a3App.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'partials/login.html',
             controller: 'loginCtrl'
         }).
+        when('/signup', {
+            templateUrl: 'partials/signup.html',
+            controller: 'signUpCtrl'
+        }).
         otherwise({
             redirectTo: '/login'
         });

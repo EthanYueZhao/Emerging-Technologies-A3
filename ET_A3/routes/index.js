@@ -2,10 +2,13 @@
 var router = express.Router();
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var app = express();
-
+var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var passportLocalMongoose = require('passport-local-mongoose');
+var app = express();
+
+
 
 /* GET home page. */
 router.get('/', function (req, res) {
@@ -39,11 +42,13 @@ var VisitSchema = new Schema({
 });
 
 var DoctorSchema = new Schema({
-    _id: String,
+    _id: Schema.ObjectId,
     name: String,
     username: String,
     password: String
 });
+
+//DoctorSchema.plugin(passportLocalMongoose);
 
 var patients = mongoose.model('patients', PatientSchema);
 var doctors = mongoose.model('doctors', DoctorSchema);
@@ -56,6 +61,16 @@ router.get('/doctors', function (req, res) {
     doctors.find(function (err, doctors) {
         if (err) console.log("error");
         res.json(doctors);
+    });
+});
+
+// post a new doctor
+router.post('/doctors', function (req, res) {
+    var doctor = new doctors(req.body);
+    doctor.set({_id: mongoose.Types.ObjectId()});
+    doctor.save(function (err) {
+        if (err) console.log('err when save'+err);
+        console.log('doctor saved');
     });
 });
 
@@ -114,36 +129,45 @@ router.put('/patients/:id', function (req, res) {
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-
-
-app.use(passport.initialize());
-passport.use(new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'passwd'
-},
-    function (username, password, done) {
-        doctors.findOne({ username: username }, function (err, user) {
-            if (err)
-            { return done(err); }
-            if (!user)
-            {
-                return done(null, false, { message: 'Incorrect username.' });
-            }
-            if (!user.validPassword(password))
-            {
-                return done(null, false, { message: 'Incorrect password.' });
-            }
-            return done(null, user);
-        });
-    }
-));
-
-router.post('/login',
-  passport.authenticate('local', {
-    successRedirect: '/patientList',
-    failureRedirect: '/login',
-    failureFlash: true
+// login authentication
+router.post('/login', passport.authenticate('local', {
+    successRedirect: '/#/patientList',
+    failureRedirect: '/#/signup'
 })
 );
+
+passport.serializeUser(function (user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function (user, done) {
+    done(null, user);
+});
+
+passport.use(new LocalStrategy(function (username, password, done) {
+    process.nextTick(function () {
+        doctors.findOne({
+            'username': username, 
+        }, function (err, user) {
+            if (err)
+            {
+                return done(err);
+            }
+            
+            if (!user)
+            {
+                return done(null, false);
+            }
+            
+            if (user.password != password)
+            {
+                return done(null, false);
+            }
+            
+            return done(null, user);
+        });
+    });
+}));
+
 
 module.exports = router;

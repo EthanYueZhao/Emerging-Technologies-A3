@@ -4,12 +4,27 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var passportLocalMongoose = require('passport-local-mongoose');
 
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+// passport config
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

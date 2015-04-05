@@ -191,3 +191,17 @@ var navbarCtrl = controllers.controller('navbarCtrl', function ($scope, patients
    
 });
 
+// doctor signup controller
+var signUpCtrl = controllers.controller('signUpCtrl', function ($scope, doctorsDS) {
+
+    $scope.signUp = function () {
+        var doctor = {
+            name: $scope.name,
+            username: $scope.username,
+            password: $scope.password
+        };
+    
+        doctorsDS.save(doctor);
+        console.log(doctor);
+    }
+});
