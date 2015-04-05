@@ -12,7 +12,7 @@ a3App.config(['$routeProvider', function ($routeProvider) {
         }).
         when('/login', {
             templateUrl: 'partials/login.html',
-            controller: 'loginCtrl'
+           // controller: 'loginCtrl'
         }).
         when('/signup', {
             templateUrl: 'partials/signup.html',

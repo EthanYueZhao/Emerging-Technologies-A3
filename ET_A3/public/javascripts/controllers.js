@@ -90,7 +90,7 @@ var patientListCtrl = controllers.controller('patientListCtrl', function ($scope
         var end = start + $scope.itemsPerPage;
         
         // display current list
-        $scope.patients = $scope.list.slice(start, end);        
+        $scope.patients = $scope.list.slice(start, end);
     });
 
 
@@ -120,7 +120,10 @@ var addPatientCtrl = controllers.controller('addPatientCtrl', function ($scope, 
             family_doctor_ID: $scope.doctorId,
             created_at: new Date().toJSON()
         };
-        $modalInstance.close(patient);
+        if ($scope.patient._id != null && $scope.patient.first_name != null && $scope.patient.last_name != null && $scope.patient.age != null && $scope.doctorId != null)
+        {
+            $modalInstance.close(patient);
+        }
     };
     
     // cancel button function
@@ -159,7 +162,10 @@ var updatePatientCtrl = controllers.controller('updatePatientCtrl', function ($s
             family_doctor_ID: $scope.doctorId,
             last_modified: new Date().toJSON()
         };
-        $modalInstance.close(patient);
+        if ($scope.patient._id != null && $scope.patient.first_name != null && $scope.patient.last_name != null && $scope.patient.age != null && $scope.doctorId != null)
+        {
+            $modalInstance.close(patient);
+        }
     };
     
     // cancel button function
@@ -192,16 +198,19 @@ var navbarCtrl = controllers.controller('navbarCtrl', function ($scope, patients
 });
 
 // doctor signup controller
-var signUpCtrl = controllers.controller('signUpCtrl', function ($scope, doctorsDS) {
-
+var signUpCtrl = controllers.controller('signUpCtrl', function ($scope, $location, doctorsDS) {
+    
     $scope.signUp = function () {
         var doctor = {
             name: $scope.name,
             username: $scope.username,
             password: $scope.password
         };
-    
-        doctorsDS.save(doctor);
-        console.log(doctor);
+        if ($scope.name != null && $scope.username != null && $scope.password != null)
+        {
+            doctorsDS.save(doctor);
+            $location.path('/#/patientList');
+            console.log(doctor);
+        }
     }
 });

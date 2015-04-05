@@ -48,7 +48,7 @@ var DoctorSchema = new Schema({
     password: String
 });
 
-//DoctorSchema.plugin(passportLocalMongoose);
+DoctorSchema.plugin(passportLocalMongoose);
 
 var patients = mongoose.model('patients', PatientSchema);
 var doctors = mongoose.model('doctors', DoctorSchema);
